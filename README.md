@@ -9,6 +9,7 @@ The Flight Path is a simple RESTful API developed in Go, designed to help users 
 - [Usage](#usage)
   - [API Endpoints](#api-endpoints)
   - [Example Requests and Responses](#example-requests-and-responses)
+  - [Curl Examples](#curl-examples)
 - [Tests](#tests)
 - [Production Considerations](#production-considerations)
 - [Code Organization and Modularization](#code-organization-and-modularization)
@@ -27,25 +28,30 @@ To install the Flight Path, you need to have [Go](https://golang.org/doc/install
 
 1. Clone the repository:
    ```
-   git clone https://github.com/plar/flight-path.git
+   $ git clone https://github.com/plar/flight-path.git
    ```
 
 2. Change to the project directory:
    ```
-   cd flight-path
+   $ cd flight-path
    ```
 
 3. Build the microservice:
    ```
-   go build
+   $ go build
    ```
 
 4. Run the microservice:
    ```
-   ./flight-path
+   $ ./flight-path
+   2023/04/20 17:15:20 Starting server on port 8080...
    ```
-
 The microservice will now be running on port 8080.
+
+5. You can run `curl` tests in another terminal window, but before that, don't forget to start the service itself:
+   ```
+   $ make curl-test
+   ```
 
 ## Usage
 
@@ -180,6 +186,30 @@ If the API is unable to find a valid flight path, it will return a `400/Bad Requ
      "message": "Invalid request format"
    }
    ```
+
+### Curl Examples
+
+1. One flight
+    ```
+    $ curl -X POST -H "Content-Type: application/json" \
+            -d '[["SFO", "EWR"]]' \
+            http://localhost:8080/calculate
+    {"status":"success","path":["SFO","EWR"]}
+    ```
+2. Two flights
+    ```
+    $ curl -X POST -H "Content-Type: application/json" \
+            -d '[["ATL", "EWR"], ["SFO", "ATL"]]' \
+            http://localhost:8080/calculate
+    {"status":"success","path":["SFO","EWR"]}
+    ```
+3. Multiple flights
+    ```
+    $ curl -X POST -H "Content-Type: application/json" \
+            -d '[["IND", "EWR"], ["SFO", "ATL"], ["GSO", "IND"], ["ATL", "GSO"]]' \
+            http://localhost:8080/calculate
+    {"status":"success","path":["SFO","EWR"]}
+    ```
 
 ## Tests
 
