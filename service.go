@@ -15,7 +15,7 @@ func FindFlightPath(flights []Flight) (flight *Flight, err error) {
 }
 
 // findFlightPathCandidate takes a slice of unordered flights and returns
-// the candidate starting and ending airports of the complete flight path.
+// the candidate flight path.
 // If the function fails to find a candidate flight path, it returns nil.
 // The returned flight path candidate may not be a valid flight path
 // if there are disconnected flights. A hasDisconnectedFlights function should be
