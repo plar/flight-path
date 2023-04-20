@@ -1,7 +1,6 @@
 package main
 
-// FindFlightPath takes a slice of unordered flights and returns a slice containing
-// the starting and ending airports of the complete flight path.
+// FindFlightPath takes a slice of unordered flights and returns a flight.
 // If the function fails to find a valid flight path, it returns an error.
 func FindFlightPath(flights []Flight) (flight *Flight, err error) {
 	if flight = findFlightPathCandidate(flights); flight == nil {
